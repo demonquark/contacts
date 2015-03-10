@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools" 
+	tools:context="edu.kris.contacts.MainActivity" 
+	android:orientation="vertical"
+	android:padding="@dimen/activity_horizontal_margin" 
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:gravity="center" >
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+		android:orientation="horizontal"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:layout_marginBottom="5dp" >
+	    <Button android:id="@+id/btnInsert"
+	        style="?android:attr/buttonBarButtonStyle"
+		    android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/insert"
+			android:onClick="buttonHandler" />
+	
+	    <Button android:id="@+id/btnBackup"
+	        style="?android:attr/buttonBarButtonStyle"
+		    android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/backup"
+			android:onClick="buttonHandler" />
+	    <Button android:id="@+id/btnRefresh"
+	        style="?android:attr/buttonBarButtonStyle"
+		    android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/refresh"
+			android:onClick="buttonHandler" />
+	</LinearLayout>
+    
+    <ScrollView 
+	    android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
+		
+		<TextView android:id="@+id/mainText"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/hello_world" />
+	</ScrollView>    
+</LinearLayout>
