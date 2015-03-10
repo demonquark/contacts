@@ -3,24 +3,47 @@ package edu.kris.contacts.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Contact {
- 	private String id 						= null;
+public class RawContact {
+ 	private long id 						= -1;		// Raw contact ID
+ 	private long contact_id					= -1;		// Contact ID identifies an aggregation of raw contacts
+ 	private int isPrimary					= 0;
  	private String displayName 				= null;
  	private ArrayList<Phone> phone 			= new ArrayList<Phone>();
  	private ArrayList<Email> email 			= new ArrayList<Email>();
- 	private ArrayList<String> notes 		= new ArrayList<String>();
- 	private ArrayList<Address> addresses 	= new ArrayList<Address>();
+ 	private ArrayList<Note> notes 			= new ArrayList<Note>();
+ 	private ArrayList<StructuredPostal> addresses 	= new ArrayList<StructuredPostal>();
+ 	private ArrayList<SIPAddress> sips		= new ArrayList<SIPAddress> ();
  	private ArrayList<IM> imAddresses 		= new ArrayList<IM>();
+ 	private ArrayList<Event> events			= new ArrayList<Event>();
+ 	private ArrayList<Website> websites		= new ArrayList<Website>();
  	private Organization organization 		= new Organization();
  	private StructuredName structuredName 	= new StructuredName ();
  	private AccountInfo account 			= new AccountInfo ();
+ 	private NickName nickName				= new NickName();
+ 	private Relation relation				= new Relation();
  	
- 	public Contact(){}
- 	public Contact(String [] csvValues) {
+ 	public RawContact(){}
+ 	public int getIsPrimary() {
+		return isPrimary;
+	}
+	public void setIsPrimary(int isPrimary) {
+		this.isPrimary = isPrimary;
+	}
+	public RawContact(long rawID, long contactID){
+ 		this.id = rawID; 
+ 		this.contact_id = contactID;
+ 	}
+ 	public RawContact(String [] csvValues) {
  		readValues(csvValues);
  	}
  	
- 	public AccountInfo getAccount() {
+ 	public long getContact_id() {
+		return contact_id;
+	}
+	public void setContact_id(long contact_id) {
+		this.contact_id = contact_id;
+	}
+	public AccountInfo getAccount() {
 		return account;
 	}
 	public void setAccount(AccountInfo account) {
@@ -39,25 +62,94 @@ public class Contact {
  		this.imAddresses = imAddresses;
   	}
  	public void addImAddresses(IM imAddr) {
- 		this.imAddresses.add(imAddr);
+ 		if(this.imAddresses == null){
+ 			this.imAddresses = new ArrayList<IM> ();
+ 		}
+ 		if(imAddr != null) {
+ 			this.imAddresses.add(imAddr);
+ 		}
  	}
- 	public ArrayList<String> getNotes() {
+ 	public ArrayList<Note> getNotes() {
  		return notes;
  	}
- 	public void setNotes(ArrayList<String> notes) {
+ 	public void setNotes(ArrayList<Note> notes) {
  		this.notes = notes;
  	}
- 	public void addNote(String note) {
- 		this.notes.add(note);
+ 	public void addNote(Note note) {
+ 		if(this.notes == null){
+ 			this.notes = new ArrayList<Note> ();
+ 		}
+ 		if(note != null) {
+ 			this.notes.add(note);
+ 		}
  	}
- 	public ArrayList<Address> getAddresses() {
+ 	public ArrayList<SIPAddress> getSips() {
+		return sips;
+	}
+	public void setSips(ArrayList<SIPAddress> sips) {
+		this.sips = sips;
+	}
+ 	public void addSIPAddress(SIPAddress sip) {
+ 		if(this.sips == null){
+ 			this.sips = new ArrayList<SIPAddress> ();
+ 		}
+ 		if(sip != null) {
+ 			this.sips.add(sip);
+ 		}
+ 	}
+	public ArrayList<Event> getEvents() {
+		return events;
+	}
+	public void setEvents(ArrayList<Event> events) {
+		this.events = events;
+	}
+ 	public void addEvents(Event event) {
+ 		if(this.events == null){
+ 			this.events = new ArrayList<Event> ();
+ 		}
+ 		if(event != null) {
+ 			this.events.add(event);
+ 		}
+ 	}
+	public NickName getNickName() {
+		return nickName;
+	}
+	public void setNickName(NickName nickName) {
+		this.nickName = nickName;
+	}
+	public ArrayList<Website> getWebsites() {
+		return websites;
+	}
+	public void setWebsite(ArrayList<Website> websites) {
+		this.websites = websites;
+	}
+	public void addWebsite(Website website){
+ 		if(this.websites == null){
+ 			this.websites = new ArrayList<Website> ();
+ 		}
+ 		if(website != null) {
+ 			this.websites.add(website);
+ 		}
+	}
+	public Relation getRelation() {
+		return relation;
+	}
+	public void setRelation(Relation relation) {
+		this.relation = relation;
+	}
+	public ArrayList<StructuredPostal> getAddresses() {
  		return addresses;
  	}
- 	public void setAddresses(ArrayList<Address> addresses) {
+ 	public void setAddresses(ArrayList<StructuredPostal> addresses) {
  		this.addresses = addresses;
  	}
- 	public void addAddress(Address address) {
- 		this.addresses.add(address);
+ 	public void addAddress(StructuredPostal address) {
+ 		if(this.addresses == null){
+ 			this.addresses = new ArrayList<StructuredPostal> ();
+ 		}
+ 		if(address != null) {
+ 			this.addresses.add(address);
+ 		}
  	}
  	public ArrayList<Email> getEmail() {
  		return email;
@@ -66,12 +158,17 @@ public class Contact {
  		this.email = email;
  	}
  	public void addEmail(Email e) {
- 		this.email.add(e);
+ 		if(this.email == null){
+ 			this.email = new ArrayList<Email> ();
+ 		}
+ 		if(e != null) {
+ 			this.email.add(e);
+ 		}
  	}	
- 	public String getId() {
+ 	public long getId() {
  		return id;
  	}
- 	public void setId(String id) {
+ 	public void setId(long id) {
   		this.id = id;
  	}
  	public String getDisplayName() {
@@ -87,7 +184,12 @@ public class Contact {
  		this.phone = phone;
  	}
  	public void addPhone(Phone phone) {
- 		this.phone.add(phone);
+ 		if(this.phone == null){
+ 			this.phone = new ArrayList<Phone> ();
+ 		}
+ 		if(phone != null) {
+ 			this.phone.add(phone);
+ 		}
  	}
 	public StructuredName getStructuredName() {
 		return structuredName;
@@ -109,7 +211,7 @@ public class Contact {
 		int sublen = 0;
 
 		// Read the class values from the array
-		id = values.length < 1 ? "" : values[0]; 
+		id = values.length < 1 ? -1 : Long.valueOf(values[0]); 
 		displayName = values.length < 2 ? "" : values[1]; 
 		i += 2;
 		
@@ -137,7 +239,7 @@ public class Contact {
 			newPhone.readValues(Arrays.copyOfRange(values, i, i + Phone.getHeader().length));
 		i += Phone.getHeader().length;
 		phone = new ArrayList <Phone> ();
-		if(newPhone.getType() != null)
+		if(newPhone.getType() >= 0)
 			phone.add(newPhone);
 		
 		// Read 1 Email from the array
@@ -146,17 +248,17 @@ public class Contact {
 			newEmail.readValues(Arrays.copyOfRange(values, i, i + Email.getHeader().length));
 		i += Email.getHeader().length;
 		email = new ArrayList <Email> ();
-		if(newEmail.getType() != null)
+		if(newEmail.getType() >= 0)
 			email.add(newEmail);
 
 		// Read 1 Address from the array
-		Address newAddress = new Address ();
-		if(values.length >= i + Address.getHeader().length)
-			newAddress.readValues(Arrays.copyOfRange(values, i, i + Address.getHeader().length));
-		i += Address.getHeader().length;
-		addresses = new ArrayList <Address> ();
+		StructuredPostal newAddress = new StructuredPostal ();
+		if(values.length >= i + StructuredPostal.getHeader().length)
+			newAddress.readValues(Arrays.copyOfRange(values, i, i + StructuredPostal.getHeader().length));
+		i += StructuredPostal.getHeader().length;
+		addresses = new ArrayList <StructuredPostal> ();
 		addresses.add(newAddress);
-		if(newAddress.getType() != null)
+		if(newAddress.getType() >= 0)
 			addresses.add(newAddress);
 		
 		// Read 1 IM from the array
@@ -165,13 +267,13 @@ public class Contact {
 			newIM.readValues(Arrays.copyOfRange(values, i, i + IM.getHeader().length));
 		i += IM.getHeader().length;
 		imAddresses = new ArrayList <IM> ();
-		if(newIM.getType() != null)
+		if(newIM.getType() >= 0)
 			imAddresses.add(newIM);
 				
 		// Read 1 Note from the array
-		notes = new ArrayList <String> ();
+		notes = new ArrayList <Note> ();
 		if(values.length >= i + 1 && values[i] != null)
-			notes.add(values[i]);
+			notes.add(new Note(new String [] { values[i] }));
 		i += 1;
 		
 		// Read the extra values at the end of the array
@@ -199,9 +301,9 @@ public class Contact {
 					i += sublen;
 				}
 			} else if(CSVaddressMark.equals(mark)){
-				sublen = Address.getHeader().length;
+				sublen = StructuredPostal.getHeader().length;
 				while(values.length >= i + sublen && isValid(values, i, sublen)) {
-					newAddress = new Address ();
+					newAddress = new StructuredPostal ();
 					newAddress.readValues(Arrays.copyOfRange(values, i, i + sublen));
 					addresses.add(newAddress);
 					i += sublen;
@@ -216,7 +318,7 @@ public class Contact {
 				}
 			} else if (CSVnotesMark.equals(mark)){
 				while(values.length >= i + 1 && isValid(values, i, 1)) {
-					notes.add(values[i]);
+					notes.add(new Note(new String [] { values[i] }));
 					i++;
 				}
 			}
@@ -225,12 +327,12 @@ public class Contact {
 	
 	public String [] getValues(){
 		// Calculate the length of the values array
-		int length = Contact.getHeaderLength ();
+		int length = RawContact.getHeaderLength ();
 		
 		// Increase the length by the variables for additional list values
 		length += (phone != null && phone.size() > 1) ? 1 + ((phone.size() - 1) * Phone.getHeader().length) : 0;
 		length += (email != null && email.size() > 1) ? 1 + ((email.size() - 1) * Email.getHeader().length) : 0;
-		length += (addresses != null && addresses.size() > 1) ? 1 + ((addresses.size() - 1) * Address.getHeader().length) : 0;
+		length += (addresses != null && addresses.size() > 1) ? 1 + ((addresses.size() - 1) * StructuredPostal.getHeader().length) : 0;
 		length += (imAddresses != null && imAddresses.size() > 1) ? 1 + ((imAddresses.size() - 1) * IM.getHeader().length) : 0;
 		length += (notes != null && notes.size() > 1) ? 1 + ((notes.size() - 1) * 1) : 0;
 		
@@ -242,7 +344,7 @@ public class Contact {
 		String [] subvalues = null;
 		
 		// Add the variables in this class to the array
-		values[0] = id;
+		values[0] = String.valueOf(id);
 		values[1] = displayName;
 		i += 2;
 		
@@ -273,8 +375,8 @@ public class Contact {
 		
 		// Add the variables of 1 Address to the array
 		subvalues = (addresses != null && addresses.size() > 0) ? addresses.get(0).getValues() : null;
-		addValues(values, subvalues, i, Address.getHeader().length);
-		i += Address.getHeader().length;
+		addValues(values, subvalues, i, StructuredPostal.getHeader().length);
+		i += StructuredPostal.getHeader().length;
 		
 		// Add the variables of 1 IM to the array
 		subvalues = (imAddresses != null && imAddresses.size() > 0) ? imAddresses.get(0).getValues() : null;
@@ -283,7 +385,7 @@ public class Contact {
 		
 		// Add the variables of 1 Note to the array
 		if(i + 1 <= values.length){
-			values[i] = (notes != null && notes.size() > 0) ? notes.get(0) : null;
+			values[i] = (notes != null && notes.size() > 0) ? notes.get(0).getNote() : null;
 		}
 		i += 1;
 		
@@ -316,7 +418,7 @@ public class Contact {
 		}
 
 		// Add extra Addresses list values to the end of the array
-		if(addresses != null && addresses.size() > 1 && i + 1 + Address.getHeader().length <= values.length){
+		if(addresses != null && addresses.size() > 1 && i + 1 + StructuredPostal.getHeader().length <= values.length){
 			// Mark the start of Addresses 
 			values[i] = CSVaddressMark;
 			i++;
@@ -324,8 +426,8 @@ public class Contact {
 			// Add the Addresses numbers
 			for(int j = 1; j < addresses.size(); j++){
 				subvalues = (addresses.get(j) != null) ? addresses.get(j).getValues(): null;
-				addValues(values, subvalues, i, Address.getHeader().length);
-				i += Address.getHeader().length;
+				addValues(values, subvalues, i, StructuredPostal.getHeader().length);
+				i += StructuredPostal.getHeader().length;
 			}
 		}
 
@@ -351,7 +453,7 @@ public class Contact {
 			
 			// Add the notes
 			for(int j = 1; j < notes.size(); j++){
-				values[i] = notes.get(j);
+				values[i] = notes.get(j).getNote();
 			}
 		}
 
@@ -359,7 +461,7 @@ public class Contact {
 	}
 	
 	public static String [] getHeader(){
-		int length = Contact.getHeaderLength ();
+		int length = RawContact.getHeaderLength ();
 		String [] header = new String [length];
 		int i = 0;
 		
@@ -389,8 +491,8 @@ public class Contact {
 		i += Email.getHeader().length;
 		
 		// Add the header of 1 Address to the array
-		addValues(header, Address.getHeader(), i, Address.getHeader().length);
-		i += Address.getHeader().length;
+		addValues(header, StructuredPostal.getHeader(), i, StructuredPostal.getHeader().length);
+		i += StructuredPostal.getHeader().length;
 		
 		// Add the header of 1 IM to the array
 		addValues(header, IM.getHeader(), i, IM.getHeader().length);
@@ -411,7 +513,7 @@ public class Contact {
 		length += AccountInfo.getHeader().length;  		// at least 1 AccountInfo
 		length += Phone.getHeader().length;  			// at least 1 Phone 
 		length += Email.getHeader().length;  			// at least 1 Email 
-		length += Address.getHeader().length;  			// at least 1 Address 
+		length += StructuredPostal.getHeader().length;  			// at least 1 Address 
 		length += IM.getHeader().length;  				// at least 1 IM 
 		length += 1;  									// at least 1 note
 

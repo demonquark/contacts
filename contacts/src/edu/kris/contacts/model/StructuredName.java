@@ -10,6 +10,12 @@ public class StructuredName {
 	private String phoneticMiddleName 	= null;
 	private String phoneticFamilyName 	= null;
 	
+	public StructuredName(){
+		
+	}
+	public StructuredName(String[] values) {
+		readValues(values);
+	}
 	public String getPrefix() {
 		return prefix;
 	}
@@ -58,6 +64,40 @@ public class StructuredName {
 	public void setFamilyName(String familyName) {
 		this.familyName = familyName;
 	}
+	
+ 	public String toString() {
+ 			String name = "";
+ 			if (this.prefix != null) {
+ 				name += this.prefix + " ";
+ 			}
+ 			if (this.givenName != null) {
+ 				name += this.givenName + " ";
+ 			}
+ 			if (this.middleName != null) {
+ 				name += this.middleName + " ";
+ 			}
+ 			if (this.familyName != null) {
+ 				name += this.familyName + " ";
+ 			}
+ 			if (this.suffix != null) {
+ 				name += this.suffix + " ";
+ 			}
+ 			if(this.phoneticGivenName != null || this.phoneticMiddleName != null || this.phoneticFamilyName != null){
+ 				name += "( "; 
+ 	 			if (this.phoneticGivenName != null) {
+ 	 				name += this.phoneticGivenName + " ";
+ 	 			}
+ 	 			if (this.phoneticMiddleName != null) {
+ 	 				name += this.phoneticMiddleName + " ";
+ 	 			}
+ 	 			if (this.phoneticFamilyName != null) {
+ 	 				name += this.phoneticFamilyName + " ";
+ 	 			}
+ 	 			name += ")";
+ 			}
+ 			return(name);
+ 	}
+
 	
 	/**
 	 * Returns an array of the class variables as elements of the array. 

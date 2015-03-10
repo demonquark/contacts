@@ -1,24 +1,24 @@
 package edu.kris.contacts.model;
 
-public class Email {
+public class NickName {
 	
-	private String address 	= null;
+	private String name 	= null;
 	private int type		= -1;
 	private String label	= null;
 
-	public Email (){
+	public NickName (){
 	}
 	
-	public Email(String [] values) {
+	public NickName(String [] values) {
 		readValues(values);
 	}
 
-	public String getAddress() {
-		return address;
+	public String getName() {
+		return name;
 	}
 	
-	public void setAddress(String address) {
-		this.address = address;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public int getType() {
@@ -35,7 +35,7 @@ public class Email {
 	 */
 	public String [] getValues(){
 		String [] values = new String [3];
-		values[0] = address;
+		values[0] = name;
 		values[1] = String.valueOf(type);
 		values[2] = label;
 		return values;
@@ -43,7 +43,7 @@ public class Email {
  	
 	public void readValues(String [] values){
 		if(values != null && values.length >= 3){
-			address 	= values[0];
+			name 	= values[0];
 			type		= values[1] != null ? Integer.valueOf(values[1]) : -1;
 			label		= values[2];
 		}
@@ -51,7 +51,7 @@ public class Email {
  	
 	public static String [] getHeader(){
 		String [] header = new String [3];
-		header[0] = "address";
+		header[0] = "name";
 		header[1] = "type";
 		header[2] = "label";
 		return header;

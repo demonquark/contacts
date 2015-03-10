@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 	
 	private static final String TAG = "MainActivity"; 
 	
-	ArrayList <Contact> people;
+	ArrayList <RawContact> people;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,7 @@ public class MainActivity extends Activity {
         } else {
         	output += name + " succeeded.\n";
         	int i = 0;
-            for(Contact person : people){
+            for(RawContact person : people){
             	i++;
             	
             	if(i > 56 && i < 56 + numberOfRecordsInView) {
@@ -261,7 +261,7 @@ public class MainActivity extends Activity {
 					
 					// Create a list and a reader for the file
 					String [] line = null;
-					ArrayList<Contact> newPeople = new ArrayList <Contact> ();
+					ArrayList<RawContact> newPeople = new ArrayList <RawContact> ();
 					reader = new CSVReader(new InputStreamReader(new FileInputStream(backupFile), "UTF-8"),',','"', true);
 				    
 					// skip the first line (it's the header row)
@@ -270,7 +270,7 @@ public class MainActivity extends Activity {
 					// Read the file
 				    while ((line = reader.readNext()) != null) {
 						// Add the contacts to the file
-						newPeople.add(new Contact(line));
+						newPeople.add(new RawContact(line));
 						
 						if(i < 4 || (i > 20 && i < 24)){
 							Log.d(TAG, i + ") |" + line[1] + "|-|" + line[2] + "|-|" + line[3] + "|-|" + line[4] + "|-|" + line[5] + "|");
@@ -321,7 +321,7 @@ public class MainActivity extends Activity {
 				if(people != null ){
 					
 					// Write the header information 
-					writer.writeNext(Contact.getHeader());
+					writer.writeNext(RawContact.getHeader());
 					
 					// Write the primary contact information
 					int numberOfpeople = people.size();
@@ -356,8 +356,8 @@ public class MainActivity extends Activity {
 		
 		public boolean refresh() {
 			long now = System.currentTimeMillis();
-//	        people = api.getContacts(this, MAX_RECORDS);
-	        people = api.getContactsAlternative(this, MAX_RECORDS);
+	        people = api.getContacts(this, MAX_RECORDS);
+//	        people = api.getContactsAlternative(this, MAX_RECORDS);
 	        Log.i(TAG, (System.currentTimeMillis() - now) + " milliseconds is duration of REFRESH.");
 	        return true;
 		}

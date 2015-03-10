@@ -2,55 +2,58 @@ package edu.kris.contacts.model;
 
 public class IM {
 	
-	private String name	= null;
-	private String type	= null;
+	private String data				= null;
+	private int type				= -1;
+	private String label			= null;
+	private String protocol 		= null;
+	private String customProtocol 	= null;
 
 	public IM() {
  	}
 
-	public IM(String name, String type) {
- 		this.name = name;
- 		this.type = type;
- 	}
- 	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getType() {
+	public int getType() {
 		return type;
 	}
-	
-	public void setType(String type) {
+
+	public void setType(int type) {
 		this.type = type;
 	}
+
+	public IM(String [] values) {
+		readValues(values);
+ 	}
 	
 	/**
 	 * Returns an array of the class variables as elements of the array. 
 	 * @return an array of the class variables as elements of the array.
 	 */
 	public String [] getValues(){
-		String [] values = new String [2];
-		values[0] = name;
-		values[1] = type;
+		String [] values = new String [5];
+		values[0] = data;
+		values[1] = String.valueOf(type);
+		values[2] = label;
+		values[3] = protocol;
+		values[4] = customProtocol;
 		return values;
 	}
  	
 	public void readValues(String [] values){
-		if(values != null && values.length >= 2){
-			name 	= values[0];
-			type	= values[1]; 
+		if(values != null && values.length >= 5){
+			data 			= values[0];
+			type			= values[1] != null ? Integer.valueOf(values[1]) : -1;
+			label			= values[2]; 
+			protocol		= values[3]; 
+			customProtocol	= values[4]; 
 		}
 	}
  	
 	public static String [] getHeader(){
-		String [] header = new String [2];
-		header[0] = "name";
+		String [] header = new String [5];
+		header[0] = "data";
 		header[1] = "type";
+		header[2] = "label";
+		header[3] = "protocol";
+		header[4] = "customProtocol";
 		return header;
 	}
 }

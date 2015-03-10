@@ -2,7 +2,8 @@ package edu.kris.contacts.model;
 
 public class Phone {
  	private String number	= null;
- 	private String type		= null;
+ 	private int type		= -1;
+ 	private String label	= null;
  	
  	public String getNumber() {
  		return number;
@@ -12,11 +13,11 @@ public class Phone {
  		this.number = number;
  	}
  
- 	public String getType() {
+ 	public int getType() {
  		return type;
  	}
  
- 	public void setType(String type) {
+ 	public void setType(int type) {
  		this.type = type;
  	}
  
@@ -24,9 +25,8 @@ public class Phone {
  		
  	}
 
- 	public Phone(String n, String t) {
- 		this.number = n;
- 		this.type = t;
+ 	public Phone(String [] values) {
+ 		readValues(values);
  	}
  	
 	/**
@@ -34,23 +34,26 @@ public class Phone {
 	 * @return an array of the class variables as elements of the array.
 	 */
 	public String [] getValues(){
-		String [] values = new String [2];
+		String [] values = new String [3];
 		values[0] = number;
-		values[1] = type;
+		values[1] = String.valueOf(type);
+		values[2] = label;
 		return values;
 	}
  	
 	public void readValues(String [] values){
-		if(values != null && values.length >= 2){
+		if(values != null && values.length >= 3){
 			number 	= values[0];
-			type	= values[1]; 
+			type	= values[1] != null ? Integer.valueOf(values[1]) : -1;
+			label	= values[2];
 		}
 	}
  	
 	public static String [] getHeader(){
-		String [] header = new String [2];
+		String [] header = new String [3];
 		header[0] = "number";
 		header[1] = "type";
+		header[2] = "label";
 		return header;
 	}
 }
