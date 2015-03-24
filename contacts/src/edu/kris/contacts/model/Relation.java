@@ -28,6 +28,14 @@ public class Relation {
 		this.type = t;
 	}
 	
+ 	public String getLabel() {
+ 		return label;
+ 	}
+ 
+ 	public void setLabel(String label) {
+ 		this.label = label;
+ 	}
+	
 	/**
 	 * Returns an array of the class variables as elements of the array. 
 	 * @return an array of the class variables as elements of the array.

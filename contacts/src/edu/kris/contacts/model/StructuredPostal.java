@@ -18,7 +18,31 @@ public class StructuredPostal {
  	public void setType(int type) {
  		this.type = type;
  	}
- 	public String toString() {
+ 	public String getLabel() {
+		return label;
+	}
+	public String getStreet() {
+		return street;
+	}
+	public String getPobox() {
+		return pobox;
+	}
+	public String getNeighborhood() {
+		return neighborhood;
+	}
+	public String getCity() {
+		return city;
+	}
+	public String getRegion() {
+		return region;
+	}
+	public String getPostcode() {
+		return postcode;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public String toString() {
  		if (this.asString.length() > 0) {
  			return(this.asString);
  		} else {

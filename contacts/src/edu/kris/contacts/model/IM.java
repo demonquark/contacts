@@ -11,6 +11,18 @@ public class IM {
 	public IM() {
  	}
 
+	public String getData() {
+		return data;
+	}
+	
+	public String getProtocol() {
+		return protocol;
+	}
+	
+	public String getCustomProtocol() {
+		return customProtocol;
+	}
+	
 	public int getType() {
 		return type;
 	}
@@ -21,6 +33,14 @@ public class IM {
 
 	public IM(String [] values) {
 		readValues(values);
+ 	}
+	
+ 	public String getLabel() {
+ 		return label;
+ 	}
+ 
+ 	public void setLabel(String label) {
+ 		this.label = label;
  	}
 	
 	/**

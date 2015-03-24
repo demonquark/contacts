@@ -36,7 +36,7 @@ public class Note {
  	
 	public static String [] getHeader(){
 		String [] header = new String [1];
-		header[0] = "data";
+		header[0] = "note";
 		return header;
 	}
 

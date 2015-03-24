@@ -28,6 +28,11 @@ public class Website {
 	public void setType(int t) {
 		this.type = t;
 	}
+
+	public String getLabel() {
+		return label;
+	}
+	
 	
 	/**
 	 * Returns an array of the class variables as elements of the array. 

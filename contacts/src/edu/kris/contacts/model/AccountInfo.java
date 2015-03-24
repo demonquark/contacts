@@ -4,6 +4,11 @@ public class AccountInfo {
 	private String accountName = null;
 	private String accountType = null;
 		
+	public AccountInfo() {
+	}
+	public AccountInfo(String [] values) {
+		readValues(values);
+	}
 	public String getAccountName() {
 		return accountName;
 	}

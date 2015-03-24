@@ -21,6 +21,14 @@ public class Phone {
  		this.type = type;
  	}
  
+ 	public String getLabel() {
+ 		return label;
+ 	}
+ 
+ 	public void setLabel(String label) {
+ 		this.label = label;
+ 	}
+
  	public Phone () {
  		
  	}

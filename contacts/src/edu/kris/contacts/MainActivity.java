@@ -261,6 +261,7 @@ public class MainActivity extends Activity {
 					
 					// Create a list and a reader for the file
 					String [] line = null;
+					RawContact newContact = null;
 					ArrayList<RawContact> newPeople = new ArrayList <RawContact> ();
 					reader = new CSVReader(new InputStreamReader(new FileInputStream(backupFile), "UTF-8"),',','"', true);
 				    
@@ -269,13 +270,15 @@ public class MainActivity extends Activity {
 					
 					// Read the file
 				    while ((line = reader.readNext()) != null) {
-						// Add the contacts to the file
-						newPeople.add(new RawContact(line));
-						
-						if(i < 4 || (i > 20 && i < 24)){
-							Log.d(TAG, i + ") |" + line[1] + "|-|" + line[2] + "|-|" + line[3] + "|-|" + line[4] + "|-|" + line[5] + "|");
-						}
-						
+
+				    	if(line.length > 0  && line[0] != null){
+					    	// Add the contacts to the list
+				    		newContact = new RawContact(line);
+				    		newPeople.add(newContact);
+				    	} else if (line.length > 0){
+				    		newContact.readValues(line, false);
+				    	}
+				    	
 						// Update progress
 						publishProgress((i*100)/numberOfLines);
 						i++;
@@ -300,8 +303,6 @@ public class MainActivity extends Activity {
 			
 			Log.i(TAG, (System.currentTimeMillis() - now) + " milliseconds is duration of INSERT.");
 			
-			
-			
 			return success;
 		}
 
@@ -325,14 +326,20 @@ public class MainActivity extends Activity {
 					
 					// Write the primary contact information
 					int numberOfpeople = people.size();
+					int size = 0;
 					for(int i = 0; i < numberOfpeople; i++){
+						
+						// get the number of lines we need to write for this person
+						size = people.get(i).maxListSize();
+						
 						// Write line
-						writer.writeNext(people.get(i).getValues());
+						for(int p = 0; p < size; p++){
+							writer.writeNext(people.get(i).getValues(p));
+						}
 						
 						// Update progress
 						publishProgress((i*100)/numberOfpeople);
 					}
-				
 				}
 				
 				// done
@@ -357,7 +364,6 @@ public class MainActivity extends Activity {
 		public boolean refresh() {
 			long now = System.currentTimeMillis();
 	        people = api.getContacts(this, MAX_RECORDS);
-//	        people = api.getContactsAlternative(this, MAX_RECORDS);
 	        Log.i(TAG, (System.currentTimeMillis() - now) + " milliseconds is duration of REFRESH.");
 	        return true;
 		}
