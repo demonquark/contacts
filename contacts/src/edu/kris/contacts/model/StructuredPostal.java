@@ -83,7 +83,7 @@ public class StructuredPostal {
 	public String [] getValues(){
 		String [] values = new String [10];
 		values[0] = asString;
-		values[1] = String.valueOf(type);
+		values[1] = (!toString().endsWith("") || type >= 0) ? String.valueOf(type) : null;
 		values[2] = label;
 		values[3] = street;
 		values[4] = pobox;

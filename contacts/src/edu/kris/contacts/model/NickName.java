@@ -44,14 +44,14 @@ public class NickName {
 	public String [] getValues(){
 		String [] values = new String [3];
 		values[0] = name;
-		values[1] = String.valueOf(type);
+		values[1] = (name != null || type >= 0) ? String.valueOf(type) : null;
 		values[2] = label;
 		return values;
 	}
  	
 	public void readValues(String [] values){
 		if(values != null && values.length >= 3){
-			name 	= values[0];
+			name 		= values[0];
 			type		= values[1] != null ? Integer.valueOf(values[1]) : -1;
 			label		= values[2];
 		}

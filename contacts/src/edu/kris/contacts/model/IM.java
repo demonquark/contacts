@@ -50,7 +50,7 @@ public class IM {
 	public String [] getValues(){
 		String [] values = new String [5];
 		values[0] = data;
-		values[1] = String.valueOf(type);
+		values[1] = (data != null || type >= 0) ? String.valueOf(type) : null;
 		values[2] = label;
 		values[3] = protocol;
 		values[4] = customProtocol;

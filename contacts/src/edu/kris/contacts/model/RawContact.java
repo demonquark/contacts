@@ -16,11 +16,11 @@ public class RawContact {
  	private ArrayList<IM> imAddresses 		= new ArrayList<IM>();
  	private ArrayList<Event> events			= new ArrayList<Event>();
  	private ArrayList<Website> websites		= new ArrayList<Website>();
- 	private Organization organization 		= new Organization();
- 	private StructuredName structuredName 	= new StructuredName ();
- 	private AccountInfo account 			= new AccountInfo ();
- 	private NickName nickName				= new NickName();
- 	private Relation relation				= new Relation();
+ 	private Organization organization 		= null;
+ 	private StructuredName structuredName 	= null;
+ 	private AccountInfo account 			= null;
+ 	private NickName nickName				= null;
+ 	private Relation relation				= null;
  	
  	public RawContact(){}
  	public int getIsPrimary() {
@@ -203,17 +203,17 @@ public class RawContact {
 		int i = 0;
 		if(overwrite){
 			// Create new objects
-			account = new AccountInfo();
+			account = null;
 			emails = new ArrayList <Email> ();
 			events = new ArrayList <Event> ();
 			imAddresses = new ArrayList <IM> ();
-			nickName = new NickName();
+			nickName = null;
 			notes = new ArrayList <Note> ();
-			organization = new Organization();
+			organization = null;
 			phones = new ArrayList <Phone> ();
-			relation = new Relation();
+			relation = null;
 			sips = new ArrayList<SIPAddress> ();
-			structuredName = new StructuredName();
+			structuredName = null;
 			addresses = new ArrayList <StructuredPostal> ();
 			websites = new ArrayList <Website> ();
 
@@ -226,8 +226,11 @@ public class RawContact {
 		i += 4;
 		
 		// Read 1 Account from the array
-		if(overwrite && values.length >= i + AccountInfo.getHeader().length)
+		if(overwrite && values.length >= i + AccountInfo.getHeader().length
+				&& subSetContainsValues(values, i, i + AccountInfo.getHeader().length)) {
+			account = new AccountInfo();
 			account.readValues(Arrays.copyOfRange(values, i, i + AccountInfo.getHeader().length));
+		}
 		i += AccountInfo.getHeader().length;
 
 		// Read 1 Email from the array
@@ -255,8 +258,11 @@ public class RawContact {
 		i += IM.getHeader().length;
 				
 		// Read 1 nickname from the array
-		if(overwrite && values.length >= i + NickName.getHeader().length)
+		if(overwrite && values.length >= i + NickName.getHeader().length 
+				&& subSetContainsValues(values, i, i + NickName.getHeader().length)) {
+			nickName = new NickName();
 			nickName.readValues(Arrays.copyOfRange(values, i, i + NickName.getHeader().length));
+		}
 		i += NickName.getHeader().length;
 		
 		// Read 1 Note from the array
@@ -268,8 +274,11 @@ public class RawContact {
 		i += Note.getHeader().length;
 
 		// Read 1 organization from the array
-		if(overwrite && values.length >= i + Organization.getHeader().length)
+		if(overwrite && values.length >= i + Organization.getHeader().length
+				&& subSetContainsValues(values, i, i + Organization.getHeader().length)) {
+			organization = new Organization ();
 			organization.readValues(Arrays.copyOfRange(values, i, i + Organization.getHeader().length));
+		}
 		i += Organization.getHeader().length;
 		
 		// Read 1 Phone from the array
@@ -281,8 +290,11 @@ public class RawContact {
 		i += Phone.getHeader().length;
 		
 		// Read 1 organization from the array
-		if(overwrite && values.length >= i + Relation.getHeader().length)
+		if(overwrite && values.length >= i + Relation.getHeader().length
+				&& subSetContainsValues(values, i, i + Relation.getHeader().length)){
+			relation = new Relation();
 			relation.readValues(Arrays.copyOfRange(values, i, i + Relation.getHeader().length));
+		}
 		i += Relation.getHeader().length;
 		
 		// Read 1 SIP address from the array
@@ -294,8 +306,11 @@ public class RawContact {
 		i += SIPAddress.getHeader().length;
 		
 		// Read 1 StructuredName from the array
-		if(overwrite && values.length >= i + StructuredName.getHeader().length)
+		if(overwrite && values.length >= i + StructuredName.getHeader().length
+				&& subSetContainsValues(values, i, i + StructuredName.getHeader().length)){
+			structuredName = new StructuredName();
 			structuredName.readValues(Arrays.copyOfRange(values, i, i + StructuredName.getHeader().length));
+		}
 		i += StructuredName.getHeader().length;
 
 		// Read 1 Address from the array
@@ -363,7 +378,7 @@ public class RawContact {
 		addValues(values, subvalues, i, IM.getHeader().length);
 		i += IM.getHeader().length;
 		
-		// Add the variables of 1 organization to the array
+		// Add the variables of 1 nickname to the array
 		subvalues = (p == 0 && nickName != null) ? nickName.getValues() : null;
 		addValues(values, subvalues, i, NickName.getHeader().length);
 		i += NickName.getHeader().length;
@@ -523,5 +538,16 @@ public class RawContact {
 			}
 		}
 		return mainArray;
+	}
+	
+	private boolean subSetContainsValues(String [] mainArray, int start, int end){
+		
+		boolean containsValues = false;
+		if(mainArray != null && start >= 0 && start < end && end <= mainArray.length) {
+			for(int i = start; i < end; i++){
+				containsValues = containsValues || mainArray[i] != null;
+			}
+		}
+		return containsValues;
 	}
 }

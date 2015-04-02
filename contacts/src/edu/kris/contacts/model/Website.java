@@ -41,7 +41,7 @@ public class Website {
 	public String [] getValues(){
 		String [] values = new String [3];
 		values[0] = url;
-		values[1] = String.valueOf(type);
+		values[1] = (url != null || type >= 0) ? String.valueOf(type) : null;
 		values[2] = label;
 		return values;
 	}

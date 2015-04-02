@@ -17,7 +17,7 @@ public class Event {
 		return date;
 	}
 	
-	public void setURL(String date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	
@@ -44,7 +44,7 @@ public class Event {
 	public String [] getValues(){
 		String [] values = new String [3];
 		values[0] = date;
-		values[1] = String.valueOf(type);
+		values[1] = (date != null || type >= 0) ? String.valueOf(type) : null;
 		values[2] = label;
 		return values;
 	}

@@ -79,7 +79,7 @@ public class Organization {
 	public String [] getValues(){
 		String [] values = new String [9];
 		values[0] = company;
-		values[1] = String.valueOf(type);
+		values[1] = (company != null || type >= 0) ? String.valueOf(type) : null;
 		values[2] = label;
 		values[3] = title;
 		values[4] = department;
@@ -106,7 +106,7 @@ public class Organization {
 	
 	public static String [] getHeader(){
 		String [] header = new String [9];
-		header[0] = "compay";
+		header[0] = "company";
 		header[1] = "type";
 		header[2] = "label";
 		header[3] = "title";

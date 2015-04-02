@@ -94,15 +94,23 @@ public class MainActivity extends Activity {
             		output += person.getId() + ") " + person.getDisplayName() + "\n";
 
             		// Account type
-            		output += "Type: "  + person.getAccount().getAccountName() + "|"
-            							+ person.getAccount().getAccountType() + "|\n";
+            		if(person.getAccount() != null){
+                		output += "Type: "  + person.getAccount().getAccountName() + "|"
+    							+ person.getAccount().getAccountType() + "|\n";
+            		} else {
+                		output += "Type: null \n";
+            		}
             		
             		// Name
-            		output += "Name: |" + person.getStructuredName().getPrefix() + "|"
-            							+ person.getStructuredName().getGivenName() + "|"
-            							+ person.getStructuredName().getMiddleName() + "|"
-            							+ person.getStructuredName().getFamilyName() + "|"
-            							+ person.getStructuredName().getSuffix() + "|\n";
+            		if(person.getStructuredName() != null){
+                		output += "Name: |" + person.getStructuredName().getPrefix() + "|"
+    							+ person.getStructuredName().getGivenName() + "|"
+    							+ person.getStructuredName().getMiddleName() + "|"
+    							+ person.getStructuredName().getFamilyName() + "|"
+    							+ person.getStructuredName().getSuffix() + "|\n";
+            		} else {
+                		output += "Name: null \n";
+            		}
 
             		// Phone
             		output += "Phone: " + (person.getPhone() == null || person.getPhone().size() == 0 ? "null" : "") + "\n";
